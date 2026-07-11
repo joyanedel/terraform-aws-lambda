@@ -1552,13 +1552,9 @@ def install_uv_dependencies(query, path, uv_export_extra_args, tmp_dir):
         with open(requirements_file, "w") as f:
             f.write("\n".join(cleaned) + "\n")
 
-    uv_lock_file = path
-    if os.path.isdir(path):
-        uv_lock_file = os.path.join(path, "uv.lock")
-    project_path = (
-        os.path.dirname(uv_lock_file) if os.path.isdir(path) else os.path.dirname(path)
-    )
-    pyproject_file = os.path.join(project_path, "pyproject.toml")
+    dir_path = path if path == "/" or os.path.isdir(path) else os.path.dirname(path)
+    uv_lock_file = os.path.join(path, "uv.lock")
+    pyproject_file = os.path.join(dir_path, "pyproject.toml")
 
     runtime = query.runtime
     docker = query.docker
