@@ -174,6 +174,38 @@ module "package_dir_uv" {
   artifacts_dir = "${path.root}/builds/package_dir_uv/"
 }
 
+module "package_uv_pyproject" {
+  source = "../.."
+
+  create_function = false
+  runtime         = "python3.12"
+
+  source_path = [
+    {
+      path       = "${path.root}/../fixtures/python-app-uv/pyproject.toml"
+      uv_install = true
+    }
+  ]
+  artifacts_dir = "${path.root}/buids/package_uv_project"
+}
+
+
+module "package_uv_pyproject_no_lock" {
+  source = "../.."
+
+  create_function = false
+  runtime         = "python3.12"
+
+  source_path = [
+    {
+      path       = "${path.root}/../fixtures/python-app-uv-no-lock/pyproject.toml"
+      uv_install = true
+    }
+  ]
+  artifacts_dir = "${path.root}/builds/package_uv_pyproject_no_lock"
+}
+
+
 # Create zip-archive of a single directory where "uv export" & "pip install" will be executed (not using docker)
 module "package_dir_uv_no_docker" {
   source = "../../"
